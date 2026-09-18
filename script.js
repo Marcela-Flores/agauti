@@ -392,22 +392,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ✅ MEJORA: validación básica del newsletter
-  const newsletterBtn = document.getElementById('newsletter-btn');
-  const newsletterEmail = document.getElementById('newsletter-email');
-
-  if (newsletterBtn && newsletterEmail) {
-    newsletterBtn.addEventListener('click', () => {
-      const email = newsletterEmail.value.trim();
-      const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-      if (!emailValido) {
-        alert("Ingresá un correo electrónico válido.");
-        return;
-      }
-
-      alert("¡Gracias por suscribirte! 💌");
-      newsletterEmail.value = "";
-    });
-  }
+ 
 });

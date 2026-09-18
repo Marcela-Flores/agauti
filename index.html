@@ -95,14 +95,31 @@
         <p class="footer-description">Piezas exclusivas y detalles atemporales creados para resaltar tu esencia con sofisticación.</p>
       </div>
 
+      <!-- Columna del Formulario de Suscripción -->
       <div class="newsletter">
         <h4>Newsletter</h4>
         <p>Suscríbete para recibir colecciones exclusivas, novedades y preventas especiales.</p>
-        <div class="form-group">
-          <!-- ✅ MEJORA: id para capturar el input desde JS -->
-          <input type="email" id="newsletter-email" placeholder="Tu correo electrónico">
-          <button type="button" id="newsletter-btn">Suscribirse</button>
-        </div>
+
+        <!-- ✅ FORMULARIO WEB3FORMS -->
+
+        <form action="https://api.web3forms.com/submit" method="POST" class="form-group">
+      
+          <!-- 🔑 Tu Access Key de Web3Forms -->
+          <input type="hidden" name="access_key" value="8032ea35-63e7-45fe-b939-64fce12a92fb">
+      
+      <!-- Asunto del correo que te va a llegar -->
+          <input type="hidden" name="subject" value="Nueva suscripción al newsletter de agauti JOYAS">
+      
+      <!-- Anti-spam (opcional pero recomendado) -->
+          <input type="checkbox" name="botcheck" style="display: none;">
+      
+      <!-- Campo del correo del visitante -->
+          <input type="email" name="email" placeholder="Tu correo electrónico" required>
+      
+          <!-- Botón de envío -->
+          <button type="submit">Suscribirse</button>
+      
+        </form>
       </div>
 
     </div>
