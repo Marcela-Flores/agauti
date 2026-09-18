@@ -1,0 +1,86 @@
+[
+  {
+    "id": "prod01",
+    "titulo": "Dije de plata 925 con detalles en Oro 18 kt",
+    "precio": 120.00,
+    "imagen": "images/producto0002.webp",
+    "categoria": "pendientes"
+  },
+  {
+    "id": "prod02",
+    "titulo": "Anillo personalizado Plata 925",
+    "precio": 120.00,
+    "imagen": "images/producto0003.webp",
+    "categoria": "pendientes"
+  },
+  {
+    "id": "prod03",
+    "titulo": "Set Anillos Rose Gold",
+    "precio": 120.00,
+    "imagen": "images/producto0004.webp",
+    "categoria": "pendientes"
+  },
+  {
+    "id": "prod04",
+    "titulo": "Pendientes Oro Detalle Cristal",
+    "precio": 85.00,
+    "imagen": "images/producto0005.webp",
+    "categoria": "pendientes"
+  },
+  {
+    "id": "prod05",
+    "titulo": "Collar de plata 925 con detalles en Oro 18 kt",
+    "precio": 120.00,
+    "imagen": "images/producto0080.webp",
+    "categoria": "collares"
+  },
+  {
+    "id": "prod06",
+    "titulo": "Gargantilla personalizada Plata 925",
+    "precio": 120.00,
+    "imagen": "images/producto0081.webp",
+    "categoria": "collares"
+  },
+  {
+    "id": "prod07",
+    "titulo": "Cadena con dije Rose Gold",
+    "precio": 120.00,
+    "imagen": "images/producto0082.webp",
+    "categoria": "collares"
+  },
+  {
+    "id": "prod08",
+    "titulo": "Collar eslabones Detalle Cristal",
+    "precio": 85.00,
+    "imagen": "images/producto0083.webp",
+    "categoria": "collares"
+  },
+  {
+    "id": "prod09",
+    "titulo": "Anillo de plata 925 con detalles en Oro 18 kt",
+    "precio": 120.00,
+    "imagen": "images/producto0050.webp",
+    "categoria": "anillos"
+  },
+  {
+    "id": "prod10",
+    "titulo": "Anillo personalizado Plata 925",
+    "precio": 120.00,
+    "imagen": "images/producto0051.webp",
+    "categoria": "anillos"
+  },
+  {
+    "id": "prod11",
+    "titulo": "Set Anillos Alianza Rose Gold",
+    "precio": 120.00,
+    "imagen": "images/producto0052.webp",
+    "categoria": "anillos"
+  },
+  {
+    "id": "prod12",
+    "titulo": "Anillo Fino Detalle Cristal",
+    "precio": 85.00,
+    "imagen": "images/producto0053.webp",
+    "categoria": "anillos"
+  }
+]

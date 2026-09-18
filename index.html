@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agauti JOYAS</title>
+
+  <!-- ✅ CORREGIDO: subdominios fonts.googleapis.com y fonts.gstatic.com -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- PANTALLA DE CARGA (SPINNER LOADER) -->
+  <div id="loader" class="loader-container">
+    <div class="spinner"></div>
+    <p class="loader-text">agauti JOYAS</p>
+  </div>
+
+  <!-- BARRA DE ANUNCIOS SUPERIOR -->
+  <div class="announcement-bar">
+    <p>✨ Envío gratis a partir de $150.00 ✨</p>
+  </div>
+
+  <!-- NAVEGACIÓN -->
+  <header class="navbar">
+    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú">&#9776;</button>
+
+    <div class="logo">
+      <img src="images/logo.jpg" alt="agauti JOYAS Logo">
+    </div>
+
+    <nav class="nav-links" id="nav-menu">
+      <a href="#">Inicio</a>
+      <a href="#colecciones">Colecciones</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+
+    <div class="nav-icons">
+      <a href="#" id="lupa-btn"><img src="images/lupa.svg" alt="Buscar" class="icon-img"></a>
+      <!-- ✅ CORREGIDO: se agregó id="carrito-btn" -->
+      <a href="#" id="carrito-btn"><img src="images/carrito.svg" alt="Carrito" class="icon-img"></a>
+    </div>
+
+    <div class="search-bar-container" id="search-container">
+      <input type="text" id="search-input" placeholder="¿Qué joya estás buscando? (ej: plata, oro, anillo...)">
+    </div>
+  </header>
+
+  <!-- BANNER PRINCIPAL -->
+  <section class="hero">
+    <div class="hero-text">
+      <h2>Ilumina tu esencia con elegancia atemporal</h2>
+      <p>Descubre piezas únicas diseñadas para acompañarte en tus momentos más especiales.</p>
+      <a href="#colecciones" class="btn">Ver Colecciones</a>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS Y FILTROS -->
+  <section class="featured" id="colecciones">
+
+    <div class="filter-container">
+      <span class="filter-label">Filtrar por:</span>
+      <div class="categories-grid">
+        <div class="category-item active" data-categoria="todos">✨ Todos</div>
+        <div class="category-item" data-categoria="anillos">💍 Anillos</div>
+        <div class="category-item" data-categoria="pendientes">✨ Pendientes</div>
+        <div class="category-item" data-categoria="collares">📿 Collares</div>
+        <div class="category-item" data-categoria="brazaletes">💫 Brazaletes</div>
+      </div>
+    </div>
+
+    <div class="grid-products" id="contenedor-productos"></div>
+  </section>
+
+  <!-- SECCIÓN "SOBRE NOSOTROS" -->
+  <section class="about-section" id="nosotros">
+    <div class="about-card">
+      <h3>Descubre agauti JOYAS</h3>
+      <!-- ✅ CORREGIDO: "sophistication" → "sofisticación" -->
+      <p>Piezas exclusivas con detalles delicados creadas para resaltar tu belleza natural con sutileza y sofisticación.</p>
+    </div>
+  </section>
+
+  <!-- BOLETÍN / FOOTER -->
+  <footer class="footer" id="contacto">
+    <div class="footer-container">
+
+      <div class="footer-brand">
+        <h4 class="footer-logo-text">agauti JOYAS</h4>
+        <p class="footer-description">Piezas exclusivas y detalles atemporales creados para resaltar tu esencia con sofisticación.</p>
+      </div>
+
+      <div class="newsletter">
+        <h4>Newsletter</h4>
+        <p>Suscríbete para recibir colecciones exclusivas, novedades y preventas especiales.</p>
+        <div class="form-group">
+          <!-- ✅ MEJORA: id para capturar el input desde JS -->
+          <input type="email" id="newsletter-email" placeholder="Tu correo electrónico">
+          <button type="button" id="newsletter-btn">Suscribirse</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 agauti JOYAS. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- PANEL DEL CARRITO -->
+  <div id="carrito-modal" class="cart-modal">
+    <div class="cart-modal-content">
+      <div class="cart-modal-header">
+        <h3>Tu Carrito</h3>
+        <button id="cerrar-carrito" class="close-btn">&times;</button>
+      </div>
+
+      <div id="carrito-items" class="cart-items-container"></div>
+
+      <div class="cart-modal-footer">
+        <div class="cart-total">
+          <span>Total:</span>
+          <span id="carrito-total">$0.00</span>
+        </div>
+        <button id="btn-vaciar" class="btn-clear">Vaciar Carrito</button>
+        <button id="btn-checkout" class="btn-checkout">Finalizar Compra</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
