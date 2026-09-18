@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>agauti JOYAS</title>
+  <title>agauti</title>
+  <meta name="description" content="Joyas artesanales en plata 925 y oro 18kt. Diseños únicos y atemporales.">
 
-  <!-- ✅ CORREGIDO: subdominios fonts.googleapis.com y fonts.gstatic.com -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
 </head>
 <body>
 
@@ -30,7 +31,7 @@
     <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú">&#9776;</button>
 
     <div class="logo">
-      <img src="images/logo.jpg" alt="agauti JOYAS Logo">
+      <img src="images/logo.png" alt="agauti JOYAS Logo">
     </div>
 
     <nav class="nav-links" id="nav-menu">
@@ -42,7 +43,6 @@
 
     <div class="nav-icons">
       <a href="#" id="lupa-btn"><img src="images/lupa.svg" alt="Buscar" class="icon-img"></a>
-      <!-- ✅ CORREGIDO: se agregó id="carrito-btn" -->
       <a href="#" id="carrito-btn"><img src="images/carrito.svg" alt="Carrito" class="icon-img"></a>
     </div>
 
@@ -81,7 +81,6 @@
   <section class="about-section" id="nosotros">
     <div class="about-card">
       <h3>Descubre agauti JOYAS</h3>
-      <!-- ✅ CORREGIDO: "sophistication" → "sofisticación" -->
       <p>Piezas exclusivas con detalles delicados creadas para resaltar tu belleza natural con sutileza y sofisticación.</p>
     </div>
   </section>
@@ -90,6 +89,7 @@
   <footer class="footer" id="contacto">
     <div class="footer-container">
 
+      <!-- Columna Informativa de la Marca -->
       <div class="footer-brand">
         <h4 class="footer-logo-text">agauti JOYAS</h4>
         <p class="footer-description">Piezas exclusivas y detalles atemporales creados para resaltar tu esencia con sofisticación.</p>
@@ -101,24 +101,26 @@
         <p>Suscríbete para recibir colecciones exclusivas, novedades y preventas especiales.</p>
 
         <!-- ✅ FORMULARIO WEB3FORMS -->
-
         <form action="https://api.web3forms.com/submit" method="POST" class="form-group">
-      
-          <!-- 🔑 Tu Access Key de Web3Forms -->
+
+          <!-- 🔑 REEMPLAZAR POR TU ACCESS KEY -->
           <input type="hidden" name="access_key" value="8032ea35-63e7-45fe-b939-64fce12a92fb">
-      
-      <!-- Asunto del correo que te va a llegar -->
+
+          <!-- Asunto del correo que te llegará -->
           <input type="hidden" name="subject" value="Nueva suscripción al newsletter de agauti JOYAS">
-      
-      <!-- Anti-spam (opcional pero recomendado) -->
+
+          <!-- Redirección después de enviar (opcional) -->
+          <input type="hidden" name="redirect" value="https://agauti-joyas.netlify.app/?suscripcion=ok">
+
+          <!-- Anti-spam oculto -->
           <input type="checkbox" name="botcheck" style="display: none;">
-      
-      <!-- Campo del correo del visitante -->
+
+          <!-- Campo del correo del visitante -->
           <input type="email" name="email" placeholder="Tu correo electrónico" required>
-      
+
           <!-- Botón de envío -->
           <button type="submit">Suscribirse</button>
-      
+
         </form>
       </div>
 
