@@ -1,86 +1,188 @@
-[
-  {
-    "id": "prod01",
-    "titulo": "Dije de plata 925 con detalles en Oro 18 kt",
-    "precio": 120.00,
-    "imagen": "images/producto0002.webp",
-    "categoria": "pendientes"
-  },
-  {
-    "id": "prod02",
-    "titulo": "Anillo personalizado Plata 925",
-    "precio": 120.00,
-    "imagen": "images/producto0003.webp",
-    "categoria": "pendientes"
-  },
-  {
-    "id": "prod03",
-    "titulo": "Set Anillos Rose Gold",
-    "precio": 120.00,
-    "imagen": "images/producto0004.webp",
-    "categoria": "pendientes"
-  },
-  {
-    "id": "prod04",
-    "titulo": "Pendientes Oro Detalle Cristal",
-    "precio": 85.00,
-    "imagen": "images/producto0005.webp",
-    "categoria": "pendientes"
-  },
-  {
-    "id": "prod05",
-    "titulo": "Collar de plata 925 con detalles en Oro 18 kt",
-    "precio": 120.00,
-    "imagen": "images/producto0080.webp",
-    "categoria": "collares"
-  },
-  {
-    "id": "prod06",
-    "titulo": "Gargantilla personalizada Plata 925",
-    "precio": 120.00,
-    "imagen": "images/producto0081.webp",
-    "categoria": "collares"
-  },
-  {
-    "id": "prod07",
-    "titulo": "Cadena con dije Rose Gold",
-    "precio": 120.00,
-    "imagen": "images/producto0082.webp",
-    "categoria": "collares"
-  },
-  {
-    "id": "prod08",
-    "titulo": "Collar eslabones Detalle Cristal",
-    "precio": 85.00,
-    "imagen": "images/producto0083.webp",
-    "categoria": "collares"
-  },
-  {
-    "id": "prod09",
-    "titulo": "Anillo de plata 925 con detalles en Oro 18 kt",
-    "precio": 120.00,
-    "imagen": "images/producto0050.webp",
-    "categoria": "anillos"
-  },
-  {
-    "id": "prod10",
-    "titulo": "Anillo personalizado Plata 925",
-    "precio": 120.00,
-    "imagen": "images/producto0051.webp",
-    "categoria": "anillos"
-  },
-  {
-    "id": "prod11",
-    "titulo": "Set Anillos Alianza Rose Gold",
-    "precio": 120.00,
-    "imagen": "images/producto0052.webp",
-    "categoria": "anillos"
-  },
-  {
-    "id": "prod12",
-    "titulo": "Anillo Fino Detalle Cristal",
-    "precio": 85.00,
-    "imagen": "images/producto0053.webp",
-    "categoria": "anillos"
-  }
-]
+{
+  "version": "1.0",
+  "ultimaActualizacion": "2026-09-18",
+  "moneda": "USD",
+  "categorias": [
+  { "id": "todos", "nombre": "Todos" },
+  { "id": "anillos", "nombre": "Anillos" },
+  { "id": "pendientes", "nombre": "Pendientes" },
+  { "id": "collares", "nombre": "Collares" },
+  { "id": "brazaletes", "nombre": "Brazaletes" },
+  { "id": "dijes", "nombre": "Dijes" }
+  ],
+
+  "productos": [
+    {
+      "id": "anillo-001",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "precioAnterior": 150.00,
+      "categoria": "anillos",
+      "imagen": "images/anillos/anillo-001.webp",
+      "destacado": true,
+      "stock": 5
+    },
+    {
+      "id": "anillo-002",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "precioAnterior": 150.00,
+      "categoria": "anillos",
+      "imagen": "images/anillos/anillo-002.webp",
+      "destacado": true,
+      "stock": 5
+    },
+    {
+      "id": "anillo-003",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "anillos",
+      "imagen": "images/anillos/anillo-003.webp",
+      "destacado": false,
+      "stock": 8
+    },
+    {
+      "id": "anillo-004",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "precioAnterior": 150.00,
+      "categoria": "anillos",
+      "imagen": "images/anillos/anillo-004.webp",
+      "destacado": true,
+      "stock": 5
+    },
+    {
+      "id": "collar-001",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "collares",
+      "imagen": "images/collares/collar-001.webp"
+    },
+    {
+      "id": "collar-002",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "collares",
+      "imagen": "images/collares/collar-002.webp"
+    },
+    {
+      "id": "pendiente-001",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "pendientes",
+      "imagen": "images/pendientes/pendiente-001.webp"
+    },
+    {
+      "id": "pendiente-002",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "pendientes",
+      "imagen": "images/pendientes/pendiente-002.webp"
+    },
+    {
+      "id": "pendiente-003",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "pendientes",
+      "imagen": "images/pendientes/pendiente-003.webp"
+    },
+    {
+      "id": "pendiente-004",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "pendientes",
+      "imagen": "images/pendientes/pendiente-004.webp"
+  
+    },
+    {
+      "id": "pendiente-005",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "pendientes",
+      "imagen": "images/pendientes/pendiente-005.webp"
+    },
+    {
+      "id": "pendiente-006",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "pendientes",
+      "imagen": "images/pendientes/pendiente-006.webp"
+    },
+    {
+      "id": "pendiente-007",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "pendientes",
+      "imagen": "images/pendientes/pendiente-007.webp"
+    
+    },
+    {
+      "id": "pendiente-008",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "pendientes",
+      "imagen": "images/pendientes/pendiente-008.webp"
+  
+    },
+    {
+      "id": "pendiente-009",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "pendientes",
+      "imagen": "images/pendientes/pendiente-009.webp"
+    },
+    {
+      "id": "pendiente-010",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "pendientes",
+      "imagen": "images/pendientes/pendiente-010.webp"
+    },
+    {
+      "id": "pendiente-011",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "categoria": "pendientes",
+      "imagen": "images/pendientes/pendiente-011.webp"
+    },
+    {
+      "id": "dijes-001",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "precioAnterior": 150.00,
+      "categoria": "dijes",
+      "imagen": "images/dijes/dijes-001.webp",
+      "destacado": true,
+      "stock": 5
+    },
+    {
+      "id": "dijes-002",
+      "titulo": ".",
+      "descripcion": ".",
+      "precio": 120.00,
+      "precioAnterior": 150.00,
+      "categoria": "dijes",
+      "imagen": "images/dijes/dijes-002.webp",
+      "destacado": true,
+      "stock": 5
+    }
+  ]
+}

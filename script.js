@@ -3,13 +3,14 @@
 // ==========================================
 let productos = [];
 let carrito = [];
+let categorias = [];
 
-// ✅ CONFIGURACIÓN DEL WHATSAPP (editá solo acá)
-const WHATSAPP_NUMERO = "5492964474746"; // sin +, sin espacios, sin guiones
+// ✅ Configuración de WhatsApp (editá solo acá)
+const WHATSAPP_NUMERO = "5492964474746";
 
 const contenedorProductos = document.getElementById('contenedor-productos');
+const contenedorCategorias = document.querySelector('.categories-grid');
 
-// ✅ CORREGIDO: usamos id en vez de :last-child (más seguro)
 const carritoEnlace = document.getElementById('carrito-btn');
 const badge = document.createElement('span');
 
@@ -19,6 +20,26 @@ const cerrarCarritoBtn = document.getElementById('cerrar-carrito');
 const contenedorCarritoItems = document.getElementById('carrito-items');
 const totalCarritoTexto = document.getElementById('carrito-total');
 const btnVaciar = document.getElementById('btn-vaciar');
+
+// Elementos del Modal de Producto
+const productoModal = document.getElementById('producto-modal');
+const cerrarProductoBtn = document.getElementById('cerrar-producto');
+const productoImagen = document.getElementById('producto-imagen');
+const productoTitulo = document.getElementById('producto-titulo');
+const productoDescripcion = document.getElementById('producto-descripcion');
+const productoPrecio = document.getElementById('producto-precio');
+const productoPrecioAnterior = document.getElementById('producto-precio-anterior');
+const productoBtnCarrito = document.getElementById('producto-btn-carrito');
+
+// Elementos del Modal de Confirmación
+const confirmModal = document.getElementById('confirm-modal');
+const confirmTitulo = document.getElementById('confirm-titulo');
+const confirmMensaje = document.getElementById('confirm-mensaje');
+const confirmAceptar = document.getElementById('confirm-aceptar');
+const confirmCancelar = document.getElementById('confirm-cancelar');
+
+// ✅ Variable global que guarda el callback pendiente (SOLUCIÓN AL BUG)
+let accionPendiente = null;
 
 // Configuración visual del Badge
 badge.style.cssText = `
@@ -47,7 +68,6 @@ function guardarCarritoEnStorage() {
 }
 
 function cargarCarritoDesdeStorage() {
-  // ✅ MEJORA: validación por si el storage está corrupto
   try {
     const datosGuardados = localStorage.getItem('carrito_agauti');
     if (!datosGuardados) return;
@@ -66,7 +86,6 @@ function cargarCarritoDesdeStorage() {
 // 3. LÓGICA INTERNA DEL CARRITO
 // ==========================================
 function agregarAlCarrito(idProducto) {
-  // ✅ ROBUSTO: comparamos como string por si algún día hay ids numéricos
   const productoSeleccionado = productos.find(
     p => String(p.id) === String(idProducto)
   );
@@ -92,9 +111,8 @@ function vaciarCarrito() {
   guardarCarritoEnStorage();
 }
 
-// ✅ MEJORA: helper para evitar XSS básico
 function escapeHtml(str) {
-  return String(str)
+  return String(str ?? '')
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
@@ -117,11 +135,10 @@ function actualizarInterfazCarrito() {
   let totalAcumulado = 0;
 
   carrito.forEach((item, index) => {
-    totalAcumulado += item.precio;
+    totalAcumulado += Number(item.precio);
 
     const itemDiv = document.createElement('div');
     itemDiv.classList.add('cart-item');
-    // ✅ MEJORA: escapamos los textos que vienen del JSON
     itemDiv.innerHTML = `
       <img src="${escapeHtml(item.imagen)}" alt="${escapeHtml(item.titulo)}">
       <div class="cart-item-info">
@@ -148,8 +165,50 @@ function asignarEventosEliminar() {
 }
 
 // ==========================================
-// 4. RENDERIZADO DEL CATÁLOGO
+// 4. MODAL DE CONFIRMACIÓN PERSONALIZADO
 // ==========================================
+// ✅ SOLUCIÓN: guardamos el callback en una variable global
+// y usamos un único listener en el botón "Aceptar".
+// No hay cloning, no hay acumulación de listeners, funciona siempre.
+
+function mostrarConfirmacion({ titulo, mensaje, textoAceptar, onAceptar }) {
+  if (!confirmModal) return;
+
+  confirmTitulo.textContent = titulo;
+  confirmMensaje.textContent = mensaje;
+  confirmAceptar.textContent = textoAceptar || "Aceptar";
+
+  // Guardamos el callback
+  accionPendiente = onAceptar;
+
+  confirmModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarConfirmacion() {
+  if (!confirmModal) return;
+  confirmModal.classList.remove('open');
+  document.body.style.overflow = '';
+  accionPendiente = null;
+}
+
+// ==========================================
+// 5. RENDERIZADO DEL CATÁLOGO
+// ==========================================
+function renderizarCategorias(listaCategorias) {
+  if (!contenedorCategorias) return;
+  contenedorCategorias.innerHTML = '';
+
+  listaCategorias.forEach((cat, index) => {
+    const div = document.createElement('div');
+    div.classList.add('category-item');
+    if (index === 0) div.classList.add('active');
+    div.dataset.categoria = cat.id;
+    div.textContent = cat.nombre;
+    contenedorCategorias.appendChild(div);
+  });
+}
+
 function mostrarProductos(listaDeProductos) {
   if (!contenedorProductos) return;
   contenedorProductos.innerHTML = "";
@@ -163,11 +222,20 @@ function mostrarProductos(listaDeProductos) {
   listaDeProductos.forEach(producto => {
     const card = document.createElement('div');
     card.classList.add('product-card', 'fade-in-card');
+    card.dataset.id = producto.id;
+    card.style.cursor = 'pointer';
+
+    const precioHTML = producto.precioAnterior && producto.precioAnterior > producto.precio
+      ? `<p class="price">
+           <span class="price-old">$${Number(producto.precioAnterior).toFixed(2)}</span>
+           $${Number(producto.precio).toFixed(2)}
+         </p>`
+      : `<p class="price">$${Number(producto.precio).toFixed(2)}</p>`;
 
     card.innerHTML = `
       <img src="${escapeHtml(producto.imagen)}" alt="${escapeHtml(producto.titulo)}">
       <h3>${escapeHtml(producto.titulo)}</h3>
-      <p class="price">$${Number(producto.precio).toFixed(2)}</p>
+      ${precioHTML}
       <button class="btn-cart" data-id="${escapeHtml(producto.id)}">Añadir al carrito</button>
     `;
     contenedorProductos.appendChild(card);
@@ -177,9 +245,18 @@ function mostrarProductos(listaDeProductos) {
 }
 
 function asignarEventosBotonesCatalogo() {
+  const cards = document.querySelectorAll('.product-card');
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.btn-cart')) return;
+      abrirDetalleProducto(card.dataset.id);
+    });
+  });
+
   const botonesCarrito = document.querySelectorAll('.btn-cart');
   botonesCarrito.forEach(boton => {
-    boton.addEventListener('click', () => {
+    boton.addEventListener('click', (e) => {
+      e.stopPropagation();
       const idProducto = boton.getAttribute('data-id');
       agregarAlCarrito(idProducto);
 
@@ -197,8 +274,55 @@ function asignarEventosBotonesCatalogo() {
   });
 }
 
+function filtrarPorCategoria(idCategoria) {
+  if (idCategoria === "todos") {
+    mostrarProductos(productos);
+  } else {
+    const productosFiltrados = productos.filter(
+      p => p.categoria === idCategoria
+    );
+    mostrarProductos(productosFiltrados);
+  }
+}
+
 // ==========================================
-// 5. INICIALIZACIÓN GENERAL
+// 6. MODAL DE DETALLE DE PRODUCTO
+// ==========================================
+function abrirDetalleProducto(idProducto) {
+  const producto = productos.find(p => String(p.id) === String(idProducto));
+  if (!producto) return;
+
+  if (carritoModal && carritoModal.classList.contains('open')) {
+    carritoModal.classList.remove('open');
+  }
+
+  productoImagen.src = producto.imagen;
+  productoImagen.alt = producto.titulo;
+  productoTitulo.textContent = producto.titulo;
+  productoDescripcion.textContent = producto.descripcion || "Sin descripción disponible.";
+  productoPrecio.textContent = `$${Number(producto.precio).toFixed(2)}`;
+
+  if (producto.precioAnterior && producto.precioAnterior > producto.precio) {
+    productoPrecioAnterior.textContent = `$${Number(producto.precioAnterior).toFixed(2)}`;
+    productoPrecioAnterior.style.display = 'inline';
+  } else {
+    productoPrecioAnterior.style.display = 'none';
+  }
+
+  productoBtnCarrito.dataset.id = producto.id;
+  productoImagen.classList.remove('zoomed');
+
+  productoModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarDetalleProducto() {
+  productoModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ==========================================
+// 7. INICIALIZACIÓN GENERAL
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -211,7 +335,10 @@ document.addEventListener('DOMContentLoaded', () => {
       return res.json();
     })
     .then(datos => {
-      productos = datos;
+      productos = datos.productos || [];
+      categorias = datos.categorias || [];
+
+      renderizarCategorias(categorias);
       mostrarProductos(productos);
       cargarCarritoDesdeStorage();
 
@@ -229,7 +356,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-  // Abrir carrito
+  // ========================================
+  // ABRIR Y CERRAR CARRITO
+  // ========================================
   if (carritoEnlace) {
     carritoEnlace.addEventListener('click', (e) => {
       e.preventDefault();
@@ -237,14 +366,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Cerrar carrito (botón X)
   if (cerrarCarritoBtn) {
     cerrarCarritoBtn.addEventListener('click', () => {
       carritoModal.classList.remove('open');
     });
   }
 
-  // ✅ MEJORA: cerrar carrito al hacer clic fuera del modal
   if (carritoModal) {
     carritoModal.addEventListener('click', (e) => {
       if (e.target === carritoModal) {
@@ -253,14 +380,89 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ✅ MEJORA: cerrar carrito con tecla Escape
+  // ========================================
+  // ABRIR Y CERRAR MODAL DE PRODUCTO
+  // ========================================
+  if (cerrarProductoBtn) {
+    cerrarProductoBtn.addEventListener('click', cerrarDetalleProducto);
+  }
+
+  if (productoModal) {
+    productoModal.addEventListener('click', (e) => {
+      if (e.target === productoModal) {
+        cerrarDetalleProducto();
+      }
+    });
+  }
+
+  // Botón "Añadir al carrito" dentro del modal de producto
+  if (productoBtnCarrito) {
+    productoBtnCarrito.addEventListener('click', () => {
+      const idProducto = productoBtnCarrito.dataset.id;
+      if (idProducto) {
+        agregarAlCarrito(idProducto);
+
+        const textoOriginal = productoBtnCarrito.textContent;
+        productoBtnCarrito.textContent = "¡Añadido! ✓";
+        productoBtnCarrito.style.backgroundColor = "#27ae60";
+
+        setTimeout(() => {
+          productoBtnCarrito.textContent = textoOriginal;
+          productoBtnCarrito.style.backgroundColor = "";
+        }, 1200);
+      }
+    });
+  }
+
+  // Zoom de imagen dentro del modal
+  if (productoImagen) {
+    productoImagen.addEventListener('click', () => {
+      productoImagen.classList.toggle('zoomed');
+    });
+  }
+
+  // ========================================
+  // MODAL DE CONFIRMACIÓN — LISTENERS
+  // ========================================
+  // ✅ Un solo listener que consulta la variable global
+  if (confirmAceptar) {
+    confirmAceptar.addEventListener('click', () => {
+      const accion = accionPendiente;
+      cerrarConfirmacion();
+      if (typeof accion === 'function') accion();
+    });
+  }
+
+  if (confirmCancelar) {
+    confirmCancelar.addEventListener('click', cerrarConfirmacion);
+  }
+
+  if (confirmModal) {
+    confirmModal.addEventListener('click', (e) => {
+      if (e.target === confirmModal) {
+        cerrarConfirmacion();
+      }
+    });
+  }
+
+  // ========================================
+  // TECLA ESCAPE — cierra el modal abierto (en orden de prioridad)
+  // ========================================
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && carritoModal.classList.contains('open')) {
+    if (e.key !== 'Escape') return;
+
+    if (confirmModal && confirmModal.classList.contains('open')) {
+      cerrarConfirmacion();
+    } else if (productoModal && productoModal.classList.contains('open')) {
+      cerrarDetalleProducto();
+    } else if (carritoModal && carritoModal.classList.contains('open')) {
       carritoModal.classList.remove('open');
     }
   });
 
-  // Menú Hamburguesa
+  // ========================================
+  // MENÚ HAMBURGUESA
+  // ========================================
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const navMenu = document.getElementById('nav-menu');
 
@@ -277,12 +479,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Búsqueda
+  // ========================================
+  // BÚSQUEDA
+  // ========================================
   const lupaBtn = document.getElementById('lupa-btn');
   const searchContainer = document.getElementById('search-container');
   const searchInput = document.getElementById('search-input');
-  const botonesCategoria = document.querySelectorAll('.category-item');
-  const botonTodos = document.querySelector('[data-categoria="todos"]');
 
   if (lupaBtn && searchContainer && searchInput) {
     lupaBtn.addEventListener('click', (e) => {
@@ -294,7 +496,10 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         searchInput.value = "";
         mostrarProductos(productos);
-        botonesCategoria.forEach(b => b.classList.remove('active'));
+
+        const botones = document.querySelectorAll('.category-item');
+        botones.forEach(b => b.classList.remove('active'));
+        const botonTodos = document.querySelector('[data-categoria="todos"]');
         if (botonTodos) botonTodos.classList.add('active');
       }
     });
@@ -302,39 +507,43 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', () => {
       const textoUsuario = searchInput.value.toLowerCase().trim();
       const productosFiltrados = productos.filter(p =>
-        p.titulo.toLowerCase().includes(textoUsuario)
+        String(p.titulo).toLowerCase().includes(textoUsuario)
       );
       mostrarProductos(productosFiltrados);
 
-      botonesCategoria.forEach(b => b.classList.remove('active'));
-      if (textoUsuario === "" && botonTodos) {
-        botonTodos.classList.add('active');
+      const botones = document.querySelectorAll('.category-item');
+      botones.forEach(b => b.classList.remove('active'));
+
+      if (textoUsuario === "") {
+        const botonTodos = document.querySelector('[data-categoria="todos"]');
+        if (botonTodos) botonTodos.classList.add('active');
       }
     });
   }
 
-  // Filtrado por Categorías
-  botonesCategoria.forEach(boton => {
-    boton.addEventListener('click', () => {
+  // ========================================
+  // FILTRADO POR CATEGORÍAS (delegación de eventos)
+  // ========================================
+  if (contenedorCategorias) {
+    contenedorCategorias.addEventListener('click', (e) => {
+      const boton = e.target.closest('.category-item');
+      if (!boton) return;
+
       if (searchContainer) searchContainer.classList.remove('search-active');
       if (searchInput) searchInput.value = "";
 
-      botonesCategoria.forEach(b => b.classList.remove('active'));
+      const botones = contenedorCategorias.querySelectorAll('.category-item');
+      botones.forEach(b => b.classList.remove('active'));
       boton.classList.add('active');
 
       const categoriaSeleccionada = boton.getAttribute('data-categoria');
-      if (categoriaSeleccionada === "todos") {
-        mostrarProductos(productos);
-      } else {
-        const productosFiltrados = productos.filter(
-          p => p.categoria === categoriaSeleccionada
-        );
-        mostrarProductos(productosFiltrados);
-      }
+      filtrarPorCategoria(categoriaSeleccionada);
     });
-  });
+  }
 
-  // Animación del Navbar al hacer Scroll
+  // ========================================
+  // ANIMACIÓN DEL NAVBAR AL HACER SCROLL
+  // ========================================
   const navbar = document.querySelector('.navbar');
   if (navbar) {
     window.addEventListener('scroll', () => {
@@ -348,18 +557,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Vaciar carrito
+  // ========================================
+  // VACIAR CARRITO (ahora usa el modal personalizado)
+  // ========================================
   if (btnVaciar) {
     btnVaciar.addEventListener('click', () => {
-      if (carrito.length > 0) {
-        if (confirm("¿Estás seguro de que deseas vaciar todo tu carrito?")) {
+      if (carrito.length === 0) return;
+
+      mostrarConfirmacion({
+        titulo: "¿Vaciar tu carrito?",
+        mensaje: "Se eliminarán todas las piezas que agregaste. Esta acción no se puede deshacer.",
+        textoAceptar: "Sí, vaciar",
+        onAceptar: () => {
           vaciarCarrito();
         }
-      }
+      });
     });
   }
 
-  // ✅ ENVIAR PEDIDO A WHATSAPP (CORREGIDO)
+  // ========================================
+  // ENVIAR PEDIDO A WHATSAPP
+  // ========================================
   const btnCheckout = document.getElementById('btn-checkout');
   if (btnCheckout) {
     btnCheckout.addEventListener('click', () => {
@@ -369,14 +587,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      let messageHeader = "✨ *Nuevo Pedido - agauti JOYAS* ✨\n\n";
+      let messageHeader = "✨ *Nuevo Pedido - agauti* ✨\n\n";
       messageHeader += "Hola, me gustaría finalizar la compra de las siguientes piezas:\n\n";
 
       let messageItems = "";
       let total = 0;
 
       carrito.forEach((item) => {
-        total += item.precio;
+        total += Number(item.precio);
         messageItems += `🔸 _${item.titulo}_ - *$${Number(item.precio).toFixed(2)}*\n`;
       });
 
@@ -386,11 +604,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const fullMessage = messageHeader + messageItems + messageFooter;
       const encodedMessage = encodeURIComponent(fullMessage);
 
-      // ✅ CORREGIDO: ahora SÍ usa el número
       const urlWhatsApp = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodedMessage}`;
       window.open(urlWhatsApp, '_blank');
     });
   }
 
- 
 });
