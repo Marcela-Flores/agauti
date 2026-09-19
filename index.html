@@ -28,7 +28,7 @@
 
   <!-- NAVEGACIÓN -->
   <header class="navbar">
-    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú">&#9776;</button>
+    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">&#9776;</button>
 
     <div class="logo">
       <img src="images/logo.png" alt="agauti JOYAS Logo">
@@ -115,7 +115,7 @@
     <div class="cart-modal-content">
       <div class="cart-modal-header">
         <h3>Tu Carrito</h3>
-        <button id="cerrar-carrito" class="close-btn">&times;</button>
+        <button id="cerrar-carrito" class="close-btn" aria-label="Cerrar carrito">&times;</button>
       </div>
 
       <div id="carrito-items" class="cart-items-container"></div>
@@ -135,10 +135,10 @@
   <div id="producto-modal" class="producto-modal">
     <div class="producto-modal-content">
 
-      <button id="cerrar-producto" class="producto-close-btn">&times;</button>
+      <button id="cerrar-producto" class="producto-close-btn" aria-label="Cerrar detalle del producto">&times;</button>
 
       <div class="producto-imagen-container">
-        <img id="producto-imagen" src="" alt="">
+        <img id="producto-imagen" src="" alt="Imagen del producto">
       </div>
 
       <div class="producto-info">
